@@ -38,12 +38,13 @@ $numPaintPictures = NUM_PICTURES - (NUM_FIX_PICTURES + NUM_PENCIL_PICTURES);
  * 6.Дополните конструкцию ifelseif, выводя фразу: “Неизвестный возраст” при условии, что
  * значение переменной $age не попадет в вышеописанные диапазоны чисел. */
 $age = 25;
-if ($age >= 18 && $age <= 65) {
-    echo "Вам еще работать и работать". '</br>';
-} elseif ($age > 65) {
-    echo "Вам пора на пенсию";
-} elseif ($age >= 1 && $age <= 17) {
+
+if ($age >= 1 && $age <= 17) {
     echo "Вам ещё рано работать" . '</br>';
+} elseif ($age > 17 && $age <= 65) {
+    echo "Вам еще работать и работать" . '</br>';
+} elseif ($age > 65) {
+    echo "Вам пора на пенсию" . '</br>';
 } else {
     echo "Неизвестный возраст" . '</br>';
 }
@@ -56,7 +57,7 @@ if ($age >= 18 && $age <= 65) {
  * 4. Выведите фразу “Неизвестный день”, если значение переменной '$day' не попадает в диапазон
  * чисел от 1 до 7 (включительно)
  */
-$day = 7;
+$day = 10;
 
 switch ($day) {
     case 1:
@@ -70,6 +71,8 @@ switch ($day) {
     case 7:
         echo "Это выходной день" . '</br>';
         break;
+    default:
+        echo "Неизвестный день" . '</br>';
 }
 
 /* Задание #5
@@ -92,7 +95,7 @@ $cars = ['BMW' => $bmw, 'toyota' => $toyota, 'opel' => $opel];
 
 foreach ($cars as $key => $val) {
     echo "CAR $key " . '</br>';
-    echo $val['model'] . " " . $val['speed'] . " " . $val['doors'] . " " . $val['years'] . '</br>';
+    echo implode(" ", $val) . '</br>';
 }
 
 /* Задание #6
