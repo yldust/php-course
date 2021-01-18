@@ -6,12 +6,12 @@
 
 function arrayToString($strArray, $return = false)
 {
-    if ($return === true) {
+    if ($return) {
         return implode(" ", $strArray);
-    } else {
-        foreach ($strArray as $str) {
-            echo "<p>" . $str . "</p>";
-        }
+    }
+
+    foreach ($strArray as $str) {
+        echo "<p>" . $str . "</p>";
     }
 
     return;
@@ -31,55 +31,42 @@ function calc(...$args)
         return "Введите операнды";
     }
 
+    $availableOperations = ['+', '-', '*', '/'];
     $operation = $args[0];
     $result = $args[1];
-    $output = "";
 
-    switch ($operation) {
-        case '+':
-            for ($i = 2; $i < sizeof($args); $i++) {
-                if (!is_numeric($args[$i])) {
-                    return "Все операнды должны быть числом";
-                }
+    if (!in_array($operation, $availableOperations)) {
+        return "Неизвестный оператор";
+    }
+
+    for ($i = 2; $i < sizeof($args); $i++) {
+
+        if (!is_numeric($args[$i])) {
+            return "Все операнды должны быть числом";
+        }
+
+        switch ($operation) {
+            case '+':
                 $result += $args[$i];
-            }
-            $output = implode(" + ", array_slice($args, 1)) . " = " . $result;
-            break;
-        case '-':
-            for ($i = 2; $i < sizeof($args); $i++) {
-                if (!is_numeric($args[$i])) {
-                    return "Все операнды должны быть числом";
-                }
+                break;
+            case '-':
                 $result -= $args[$i];
-            }
-            $output = implode(" - ", array_slice($args, 1)) . " = " . $result;
-            break;
-        case '*':
-            for ($i = 2; $i < sizeof($args); $i++) {
-                if (!is_numeric($args[$i])) {
-                    return "Все операнды должны быть числом";
-                }
+                break;
+            case '*':
                 $result *= $args[$i];
-            }
-            $output = implode(" * ", array_slice($args, 1)) . " = " . $result;
-            break;
-        case '/':
-            for ($i = 2; $i < sizeof($args); $i++) {
-                if (!is_numeric($args[$i])) {
-                    return "Все операнды должны быть числом";
-                }
+                break;
+            case '/':
                 if ($args[$i] == 0) {
                     return "Делить на ноль нельзя";
                 }
+
                 $result /= $args[$i];
-            }
-            $output = implode(" / ", array_slice($args, 1)) . " = " . $result;
-            break;
-        default:
-            echo "Неизвестный оператор";
+                break;
+        }
+
     }
 
-    return $output;
+    return implode($operation, array_slice($args, 1)) . " = " . $result;
 }
 
 /* Задание #3 (Использование рекурсии не обязательно)
@@ -89,7 +76,7 @@ function calc(...$args)
  * (Например если передано 8 и 8, то нарисовать от 1х1 до 8х8).
  * Таблица должна быть выполнена с использованием тега <table>
  * 3. В остальных случаях выдавать корректную ошибку. */
-function multiplicationTable ($numRow, $numCol)
+function multiplicationTable($numRow, $numCol)
 {
     if (!is_int($numRow) || !is_int($numCol)) {
         echo "Параметры должны быть целыми числами";
@@ -102,7 +89,7 @@ function multiplicationTable ($numRow, $numCol)
         echo "<tr>";
 
         for ($y = 1; $y <= $numCol; $y++) {
-            echo "<td style='width: 30px; text-align: center; border: 1px black solid;'>" . $i*$y . "</td>";
+            echo "<td style='width: 30px; text-align: center; border: 1px black solid;'>" . $i * $y . "</td>";
         }
 
         echo "</tr>";
@@ -116,7 +103,8 @@ function multiplicationTable ($numRow, $numCol)
 * 1. Создайте файл test.txt средствами PHP. Поместите в него текст - “Hello again!”.
 * 2. Напишите функцию, которая будет принимать имя файла, открывать файл и выводить содержимое на экран. */
 
-function openMyFile ($fileName) {
+function openMyFile($fileName)
+{
     if (file_exists($fileName)) {
         $data = file_get_contents($fileName);
         echo '</br>' . $data;
