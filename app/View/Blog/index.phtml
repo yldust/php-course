@@ -1,0 +1,48 @@
+<style>
+    .message { margin: 15px 0 0 5px; border: 1px solid grey; width: 450px;}
+    .author { margin-left: 10px; }
+    .text { padding-left: 15px; padding-top: 5px; }
+    .date {color: grey; font-size: 11px;}
+    .admin a { color: #46468b; float: right; padding-right: 15px; }
+</style>
+
+Список сообщений: <br>
+<?php if(!$this->isAuth): ?>
+    <div>Вы еще неавторизированы!</div>
+    <div>Просматривать и оставлять сообщения может только авторизированный пользователь.</div>
+    <form action="/login"><input type="submit" value="Войти"></form>
+<?php else: ?>
+    <?php if($messages = $this->messages): ?>
+        <?php foreach ($messages as $message): ?>
+            <div class="message">
+                <? if($this->user->isAdmin()): ?>
+                    <div class="admin">
+                        <a href="/admin/deleteMessage/?id=<?=$message->getId();?>">удалить</a>
+                    </div>
+                <?php endif; ?>
+                <span class="date"><?=$message->getCreatedAt();?> </span>
+                <? if($author = $message->getAuthor()):?>
+                    <span class="author"><?=htmlspecialchars($message->getAuthor());?></span>
+                <? else: ?>
+                    <span class="author">Сообщение от удаленного пользователя</span>
+                <? endif; ?>
+                <div class="text"><?=htmlspecialchars(nl2br($message->getText()));?></div>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        Сообщений пока нет
+    <?php endif; ?>
+<br/><br/>
+Добавить сообщение:
+<form action="/blog/addMessage" method="post">
+    <textarea style="width: 250px; height: 150px;" type="text" value="" name="text"></textarea><br>
+    <input type="submit" value="Отправить">
+</form>
+<br/>
+<br/>
+<?php if ($this->errors): ?>
+    <?php foreach ($this->errors as $error): ?>
+        <span style="color: red;display: block;"><?= $error; ?></span>
+    <?php endforeach; ?>
+<?php endif; ?>
+<?php endif; ?>

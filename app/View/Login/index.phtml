@@ -1,0 +1,17 @@
+<?php if($this->isAuth): ?>
+    <div>Вы уже авторизированы!</div>
+    <form action="/login/logout"><input type="submit" value="Выйти"></form>
+<?php else: ?>
+Войти
+<form action="/login" method="post">
+    Логин: <input type="text" name="email"> <br>
+    Пароль: <input type="password" name="password"> <br>
+    <input type="submit" value="Войти">
+</form>
+<form action="/login/register"><input type="submit" value="Зарегистрироваться"></form>
+<br/>
+<br/>
+<?php if($this->error): ?>
+    <span style="color: #ff0000"><?=$this->error;?></span>
+<?php endif; ?>
+<?php endif; ?>
