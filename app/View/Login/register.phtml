@@ -1,0 +1,16 @@
+Регистрация:
+<form action="/login/register" method="post">
+    Имя: <input type="text" name="name"> <br>
+    Email: <input type="text" name="email"> <br>
+    Пароль: <input type="password" name="password"> <br>
+    Пароль еще раз: <input type="password" name="password_repeat"> <br>
+    <input type="submit" value="Зарегистрироваться">
+</form>
+
+<br>
+<br>
+<?php if ($this->errors): ?>
+    <?php foreach ($this->errors as $error): ?>
+        <span style="color: red;display: block;"><?= $error; ?></span>
+    <?php endforeach; ?>
+<?php endif; ?>
